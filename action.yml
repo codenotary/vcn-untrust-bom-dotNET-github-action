@@ -21,7 +21,7 @@ runs:
   using: 'docker'
   image: 'docker://codenotary/vcn:bom-dotnet'
   args:
-    - n
+    - untrust
     - ${{ inputs.asset }}
     - --lc-host
     - ${{ inputs.cnil_host }}
