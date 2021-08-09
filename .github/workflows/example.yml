@@ -1,0 +1,28 @@
+name: untrust-project-bom
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  untrust-dotNET-project-with-bom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: untrust .NET project with BoM
+        #--> Run the GitHub action
+        uses: codenotary/vcn-untrust-bom-dotNET-github-action@v1.0.0
+        # uses: codenotary/vcn-untrust-bom-dotNET-github-action@main
+        with:
+          asset: git://.
+          cnil_host: ${{ secrets.CNIL_HOST }}
+          cnil_grpc_port: ${{ secrets.CNIL_GRPC_PORT }}
+          cnil_api_key: ${{ secrets.CNIL_API_KEY }}
+        #<--
+        #--> or run the vcn Docker image directly (all vcn flags are available and passed through)
+        # uses: docker://codenotary/vcn:bom-dotnet
+        # with:
+        #   args: untrust git://. --lc-host ${{ secrets.CNIL_HOST }} --lc-port ${{ secrets.CNIL_GRPC_PORT }} --lc-api-key ${{ secrets.CNIL_API_KEY }} --bom
+        #<--
